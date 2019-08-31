@@ -23,6 +23,7 @@
     "autoprefixer": "^9.6.1",
     "babel-plugin-import": "^1.12.1",
     "less-loader": "^5.0.0",
-    "next-compose-plugins": "^2.2.0"
+    "next-compose-plugins": "^2.2.0",
+    "uglifyjs-webpack-plugin": "^2.2.0"
   }
 }
