@@ -16,6 +16,13 @@ const Nav = () => (
         <Link href='/'>
           <a>Home</a>
         </Link>
+        
+       
+      </li>
+      <li>
+      <Link href='/about'>
+          <a>About</a>
+        </Link>
       </li>
       {links.map(({ key, href, label }) => (
         <li key={key}>
@@ -35,14 +42,15 @@ const Nav = () => (
       }
       ul {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
       }
       nav > ul {
         padding: 4px 16px;
       }
       li {
         display: flex;
-        padding: 6px 8px;
+        padding: 6px 8px !important;
+         
       }
       a {
         color: #067df7;

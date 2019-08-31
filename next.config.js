@@ -1,25 +1,31 @@
 /* eslint-disable */
-const withCss = require("@zeit/next-css");
-const nextCss = require("@zeit/next-less");
-const withPlugins = require("next-compose-plugins");
+const withCss = require('@zeit/next-css');
+const nextCss = require('@zeit/next-less');
+const withPlugins = require('next-compose-plugins');
 // const exportPathMap = require("./routerMap");
 const _nextCss = [
   nextCss,
   {
-    cssModules: true
-  }
+    cssModules: true,
+  },
 ];
 const _withCss = [
   withCss,
   {
-    cssModules: false
-  }
+    cssModules: false,
+  },
 ];
 const nextOption = {
   // exportPathMap,
   // assetsPublicPath: "./",
   // out: "./myout",
   // assetPrefix: "./",
+  generateBuildId: async () => {
+    // For example get the latest git commit hash here
+    return Math.random()
+      .toString(36)
+      .slice(2);
+  },
   webpack: (config, { isServer }) => {
     if (isServer) {
       const antStyles = /antd\/.*?\/style\/css.*?/;
@@ -27,13 +33,13 @@ const nextOption = {
       config.externals = [
         (context, request, callback) => {
           if (request.match(antStyles)) return callback();
-          if (typeof origExternals[0] === "function") {
+          if (typeof origExternals[0] === 'function') {
             origExternals[0](context, request, callback);
           } else {
             callback();
           }
         },
-        ...(typeof origExternals[0] === "function" ? [] : origExternals)
+        ...(typeof origExternals[0] === 'function' ? [] : origExternals),
       ];
       try {
         config.optimization.splitChunks.cacheGroups.styles.chunks = 'async';
@@ -42,10 +48,15 @@ const nextOption = {
       }
       config.module.rules.unshift({
         test: antStyles,
-        use: "null-loader"
+        use: 'null-loader',
       });
     }
+    // try {
+    //   _config.optimization.splitChunks.cacheGroups.styles.chunks = 'async';
+    // } catch (ev) {
+    //   console.log('--');
+    // }
     return config;
-  }
+  },
 };
 module.exports = withPlugins([_nextCss, _withCss], nextOption);

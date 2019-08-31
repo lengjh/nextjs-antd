@@ -1,21 +1,37 @@
-import React from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
-import Nav from '../components/nav'
-import { Row, Col, Button, Input, Card } from 'antd'
+import React, { Component } from 'react';
+import Link from 'next/link';
+import Head from 'next/head';
+import Nav from '../components/nav';
+import { Row, Col, Button, Input, Card } from 'antd';
 import css from './index.less';
- 
-const Home = () => (
-  <div>
-    <Head>
-      <title>Home</title>
-    </Head>
+import dynamic from 'next/dynamic';
 
-    <Nav />
-    <h1 className={css.title}>Hello,Nextjs + Antd</h1>
-    {/* <Card title="Nextjs + Antd">
+const DynamicComponent = dynamic(() => import('../components/Hello/index').then(mod => mod.Hello));
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { load: false };
+  }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ load: true });
+    }, 2000);
+  }
+  render() {
+    return (
+      <>
+        <Head>
+          <title>Home</title>
+        </Head>
+
+        <Nav />
+
+        <h1 className={css.title}>Hello,Nextjs + Antd</h1>
+        {this.state.load ? <DynamicComponent /> : null}
+        {/* <Card title="Nextjs + Antd">
     </Card> */}
-    {/* <Row gutter={10} >
+        {/* <Row gutter={10} >
       <Col xs={24} sm={12} md={8} lg={4} span={4}><Input /></Col>
       <Col xs={24} sm={12} md={8} lg={4} span={4}><Input /></Col>
       <Col xs={24} sm={12} md={8} lg={4} span={4}><Input /></Col>
@@ -23,53 +39,9 @@ const Home = () => (
       <Col xs={24} sm={12} md={8} lg={4} span={4}><Input /></Col>
       <Col xs={24} sm={12} md={8} lg={4} span={4}><Input /></Col>
     </Row> */}
-    <style jsx>{`
-      .hero {
-        width: 100%;
-        color: #333;
-      }
-      .title {
-        margin: 0;
-        width: 100%;
-        padding-top: 80px;
-        line-height: 1.15;
-        font-size: 48px;
-      }
-      .title,
-      .description {
-        text-align: center;
-      }
-      .row {
-        max-width: 880px;
-        margin: 80px auto 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-      }
-      .card {
-        padding: 18px 18px 24px;
-        width: 220px;
-        text-align: left;
-        text-decoration: none;
-        color: #434343;
-        border: 1px solid #9b9b9b;
-      }
-      .card:hover {
-        border-color: #067df7;
-      }
-      .card h3 {
-        margin: 0;
-        color: #067df7;
-        font-size: 18px;
-      }
-      .card p {
-        margin: 0;
-        padding: 12px 0 0;
-        font-size: 13px;
-        color: #333;
-      }
-    `}</style>
-  </div>
-)
-
-export default Home
+        <style jsx>{``}</style>
+      </>
+    );
+  }
+}
+export default App;
