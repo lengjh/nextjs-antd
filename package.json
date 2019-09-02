@@ -6,10 +6,10 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "export": "next export -o ./app/html",
+    "export": "rm -fr .next  && rm -fr out  && rm -fr ./app/html  && next build && next export  -o ./app/html",
     "commit": "git-cz",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "serve": "rm .next -fr && rm out -fr && rm ./app/html -fr && next build && next export  -o ./app/html && serve ./app/html/"
+    "serve": "rm -fr .next  && rm -fr out  && rm -fr ./app/html  && next build && next export  -o ./app/html && serve ./app/html/"
   },
   "dependencies": {
     "@zeit/next-less": "^1.0.1",
