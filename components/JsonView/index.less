@@ -1,0 +1,22 @@
+.box {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  padding-bottom: 10px;
+
+  &>div {
+
+    padding: 0 10px;
+    height: 100%;
+    overflow: auto;
+
+    &:nth-child(1) {
+      flex: 1;
+    }
+
+    &:nth-child(2) {
+      flex: 2;
+    }
+  }
+}
