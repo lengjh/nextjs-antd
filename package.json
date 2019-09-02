@@ -8,6 +8,7 @@
     "start": "next start",
     "export": "next export",
     "commit": "git-cz",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "serve": "next build && next export && serve out/"
   },
   "dependencies": {
@@ -23,6 +24,9 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "gitHooks": {
+    "commit-msg": "node scripts/verify-commit-msg.js"
   },
   "devDependencies": {
     "@zeit/next-css": "^1.0.1",
