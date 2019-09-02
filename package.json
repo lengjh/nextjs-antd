@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "export": "next export",
+    "commit": "git-cz",
     "serve": "next build && next export && serve out/"
   },
   "dependencies": {
@@ -18,10 +19,18 @@
     "react": "16.9.0",
     "react-dom": "16.9.0"
   },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
   "devDependencies": {
     "@zeit/next-css": "^1.0.1",
     "autoprefixer": "^9.6.1",
     "babel-plugin-import": "^1.12.1",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
+    "git-cz": "^3.2.1",
     "less-loader": "^5.0.0",
     "next-compose-plugins": "^2.2.0",
     "uglifyjs-webpack-plugin": "^2.2.0"
