@@ -6,19 +6,23 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "export": "next export",
+    "export": "next export -o ./app/html",
     "commit": "git-cz",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "serve": "next build && next export && serve out/"
+    "serve": "rm .next -fr && rm out -fr && rm ./app/html -fr && next build && next export  -o ./app/html && serve ./app/html/"
   },
   "dependencies": {
     "@zeit/next-less": "^1.0.1",
+    "Base64": "^1.0.2",
     "antd": "^3.22.2",
     "less": "^3.10.3",
+    "md5": "^2.2.1",
     "next": "9.0.5",
     "null-loader": "^3.0.0",
+    "qrcode": "^1.4.1",
     "react": "16.9.0",
-    "react-dom": "16.9.0"
+    "react-dom": "16.9.0",
+    "react-json-view": "^1.19.1"
   },
   "config": {
     "commitizen": {
@@ -39,6 +43,7 @@
     "git-cz": "^3.2.1",
     "less-loader": "^5.0.0",
     "next-compose-plugins": "^2.2.0",
+    "next-images": "^1.1.2",
     "uglifyjs-webpack-plugin": "^2.2.0"
   }
 }

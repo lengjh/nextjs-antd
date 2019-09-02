@@ -79,47 +79,9 @@ class App extends Component {
         <Head>
           <title>Home</title>
         </Head>
-        <Layout>
-          {load ? (
-            <Sider trigger={null} collapsible collapsed={collapsed}>
-              <div className={css.logo}>
-                <img src={codeIcon} alt="" />
-              </div>
-              <Menu theme="dark" mode="inline" defaultSelectedKeys={[type]} onClick={this.setMenu}>
-                <Menu.Item key="1">
-                  <Icon type="check" />
-                  <span>JSON View</span>
-                </Menu.Item>
-                <Menu.Item key="2">
-                  <Icon type="code" />
-                  <span>编码转换</span>
-                </Menu.Item>
-                <Menu.Item key="3">
-                  <Icon type="barcode" />
-                  <span>QR Code</span>
-                </Menu.Item>
-                <Menu.Item key="4">
-                  <Icon type="file-image" />
-                  <span>图片换Base64</span>
-                </Menu.Item>
-              </Menu>
-            </Sider>
-          ) : null}
-          <Layout>
-            <Header style={{ background: '#fff', padding: 0 }}>
-              <Icon
-                className="trigger"
-                type={collapsed ? 'menu-unfold' : 'menu-fold'}
-                style={{ marginLeft: 20 }}
-                onClick={this.toggle}
-              />
-            </Header>
-            <Content>
-              <MaxView>{getCompoent(type)}</MaxView>
-            </Content>
-            <Footer style={{ textAlign: 'center' }}>XX ©2019</Footer>
-          </Layout>
-        </Layout>
+        <a href="/html/index.html" target="_blank">
+          index
+        </a>
       </>
     );
   }

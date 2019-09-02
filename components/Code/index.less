@@ -1,6 +1,14 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
 .codeBox {
   display: flex;
   height: 100%;
+  overflow: hidden;
 
   &>div {
     flex: 1;
@@ -9,12 +17,22 @@
     height: 100%;
     overflow: hidden;
 
-    &,
     textarea {
+      display: block;
       overflow-x: hidden;
       overflow-y: auto;
-      min-height: 500px;
+      outline: none !important;
+      height: 100% !important;
+      border: 1px solid #eeeeee !important;
     }
+
+    &>div {
+      height: 100%;
+
+
+    }
+
+
   }
 }
 

@@ -1,43 +1,34 @@
-import { Input, Button, Card, Modal } from "antd";
-import dynamic from "next/dynamic";
+import { Input, Button, Card, Modal } from 'antd';
+import dynamic from 'next/dynamic';
 const { TextArea } = Input;
-import css from "./index.less";
+import css from './index.less';
 // import ReactJson from "react-json-view";
-const ReactJson = dynamic(import("react-json-view"), {
-  ssr: false //这个要加上,禁止使用 SSR
+const ReactJson = dynamic(import('react-json-view'), {
+  ssr: false, //这个要加上,禁止使用 SSR
 });
 export default class extends React.Component {
   static async getInitialProps({ req }) {
-    const userAgent = req ? req.headers["user-agent"] : navigator.userAgent;
+    const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
     return { userAgent };
   }
   constructor(props) {
     super(props);
     this.state = {
-      json: [
-        {
-          id: "000000001",
-          avatar: "https://xxx.jpg",
-          title: "Json View",
-          datetime: "2017-08-09",
-          type: "notification"
-        },
-
-      ]
+      json: {},
     };
     this.onChange = this.onChange.bind(this);
   }
   onChange(ev) {
-    let json = "{}";
+    let json = '{}';
     let value = ev.target.value;
     try {
       value = eval(`(${value})`);
       value = JSON.stringify(value);
-    } catch (error) { }
+    } catch (error) {}
 
     try {
       json = JSON.parse(value);
-    } catch (error) { }
+    } catch (error) {}
     if (json) {
       this.setState({ json: json });
     }
@@ -48,7 +39,7 @@ export default class extends React.Component {
       <div className={css.box}>
         <div>
           <TextArea
-            style={{ height: "100%" }}
+            style={{ height: '100%' }}
             defaultValue={JSON.stringify(this.state.json)}
             onChange={this.onChange}
           />

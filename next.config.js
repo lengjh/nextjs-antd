@@ -4,6 +4,7 @@ const nextCss = require('@zeit/next-less');
 const withPlugins = require('next-compose-plugins');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 // const exportPathMap = require("./routerMap");
+const withImages = require('next-images');
 const _nextCss = [
   nextCss,
   {
@@ -16,11 +17,12 @@ const _withCss = [
     cssModules: false,
   },
 ];
+const cndUrl = '';
 const nextOption = {
   // exportPathMap,
-  // assetsPublicPath: "./",
+  assetsPublicPath: './',
   // out: "./myout",
-  // assetPrefix: "./",
+  assetPrefix: './',
   generateBuildId: async () => {
     // For example get the latest git commit hash here
     const date = new Date();
@@ -65,6 +67,7 @@ const nextOption = {
       } catch (ev) {
         console.log('--');
       }
+
       config.module.rules.unshift({
         test: antStyles,
         use: 'null-loader',
@@ -78,4 +81,4 @@ const nextOption = {
     return config;
   },
 };
-module.exports = withPlugins([_nextCss, _withCss], nextOption);
+module.exports = withPlugins([_nextCss, _withCss, withImages], nextOption);
