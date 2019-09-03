@@ -18,6 +18,9 @@ const DynamicComponentQRCode = dynamic(() => {
 const DynamicComponentImageBase64 = dynamic(() => {
   return import('../components/ImageBase64');
 });
+const DynamicComponentRE = dynamic(() => {
+  return import('../components/RE');
+});
 const getCompoent = type => {
   switch (type) {
     case '1':
@@ -28,11 +31,20 @@ const getCompoent = type => {
       return <DynamicComponentQRCode />;
     case '4':
       return <DynamicComponentImageBase64 />;
+    case '5':
+      return <DynamicComponentRE />;
     default:
       break;
   }
   return <Empty />;
 };
+const menuList = [
+  { key: '1', text: 'JSON View', icon: 'check' },
+  { key: '2', text: '编码转换', icon: 'code' },
+  { key: '3', text: 'QR Code', icon: 'barcode' },
+  { key: '4', text: '图片换Base64', icon: 'file-image' },
+  { key: '5', text: '正则', icon: 'check' },
+];
 class App extends Component {
   constructor(props) {
     super(props);
@@ -74,6 +86,13 @@ class App extends Component {
   }
   render() {
     const { type, collapsed, load } = this.state;
+    let text = '';
+    menuList.forEach(item => {
+      if (item.key === type) {
+        text = item.text;
+      }
+    });
+
     return (
       <>
         <Head>
@@ -86,22 +105,14 @@ class App extends Component {
                 <img src={codeIcon} alt="" />
               </div>
               <Menu theme="dark" mode="inline" defaultSelectedKeys={[type]} onClick={this.setMenu}>
-                <Menu.Item key="1">
-                  <Icon type="check" />
-                  <span>JSON View</span>
-                </Menu.Item>
-                <Menu.Item key="2">
-                  <Icon type="code" />
-                  <span>编码转换</span>
-                </Menu.Item>
-                <Menu.Item key="3">
-                  <Icon type="barcode" />
-                  <span>QR Code</span>
-                </Menu.Item>
-                <Menu.Item key="4">
-                  <Icon type="file-image" />
-                  <span>图片换Base64</span>
-                </Menu.Item>
+                {menuList.map(item => {
+                  return (
+                    <Menu.Item key={item.key}>
+                      <Icon type={item.icon} />
+                      <span>{item.text}</span>
+                    </Menu.Item>
+                  );
+                })}
               </Menu>
             </Sider>
           ) : null}
@@ -115,7 +126,7 @@ class App extends Component {
               />
             </Header>
             <Content>
-              <MaxView>{getCompoent(type)}</MaxView>
+              <MaxView title={text}>{getCompoent(type)}</MaxView>
             </Content>
             <Footer style={{ textAlign: 'center' }}>XX ©2019</Footer>
           </Layout>

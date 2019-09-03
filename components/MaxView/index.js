@@ -10,7 +10,7 @@ export default class extends React.Component {
     this.setState({ isMax: !this.state.isMax });
   }
   render() {
-    const { children } = this.props;
+    const { children, title } = this.props;
     const { isMax } = this.state;
     return (
       <div className={css.box} style={{ position: isMax ? 'fixed' : 'relative' }}>
@@ -20,7 +20,7 @@ export default class extends React.Component {
               this.onClick();
             }}
           >
-            <div>标题</div>
+            <div>{title}</div>
             <div>
               <Icon
                 type={isMax ? 'fullscreen-exit' : 'fullscreen'}
