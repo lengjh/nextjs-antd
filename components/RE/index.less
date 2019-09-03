@@ -2,8 +2,47 @@ body {
   // background-color: #687;
 }
 
-.test {
-  text-align: center;
+.box {
+  display: flex;
+  height: 100%;
+
+  flex-direction: column;
+}
+
+.header {}
+
+.body {
+  display: flex;
+  flex: 1;
+  // flex-direction: column;
+  padding-top: 20px;
+  overflow: hidden;
+
+  ul,
+  li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &>div {
+    flex: 1
+  }
+
+  .right {
+    padding-left: 20px;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    span {
+      margin-right: 10px;
+    }
+  }
+
+  textarea {
+    height: 100%;
+  }
 }
 
 .success {

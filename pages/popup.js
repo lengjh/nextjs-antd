@@ -29,9 +29,13 @@ class App extends Component {
           <title>Home</title>
         </Head>
         <div className={css.box}>
-          <a href="/html/index.html" target="_blank">
-            index
-          </a>
+          <ul>
+            <li>
+              <a href="/html/index.html" target="_blank">
+                JSON View
+              </a>
+            </li>
+          </ul>
         </div>
       </>
     );
