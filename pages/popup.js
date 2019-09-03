@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
-import { Layout, Menu, Breadcrumb, Icon, Row, Col, Button, Input, Card, Empty } from 'antd';
-import css from './popup.less';
+import { Icon } from 'antd';
+import QRCode from '../components/QRCode';
+import { MarkdownIcon, RegExpIcon, JSONIcon } from '../components/Icons';
 
+import css from './popup.less';
+const menuList = [
+  { key: '1', text: 'JSON View', icon: 'check' },
+  { key: '2', text: '编码转换', icon: 'code' },
+  { key: '3', text: 'QR Code', icon: 'barcode' },
+  { key: '4', text: '图片换Base64', icon: 'file-image' },
+  { key: '5', text: '正则达式', icon: 'check' },
+  { key: '6', text: 'Markdown', icon: <Icon component={<mdIcon />} /> },
+];
 class App extends Component {
+  static async getInitialProps({ req }) {
+    return { isDev: process.env.NODE_ENV !== 'production' };
+  }
   constructor(props) {
     super(props);
     this.state = { type: 1, load: false, collapsed: true };
@@ -22,19 +35,43 @@ class App extends Component {
     return obj[name] || null;
   }
   render() {
-    const { type, collapsed, load } = this.state;
+    const { isDev } = this.props;
     return (
       <>
         <Head>
-          <title>Home</title>
+          <title>WDT</title>
         </Head>
         <div className={css.box}>
+          <QRCode />
           <ul>
-            <li>
-              <a href="/html/index.html" target="_blank">
-                JSON View
-              </a>
-            </li>
+            {menuList.map((item, index) => {
+              return (
+                <li key={index}>
+                  <a href={`/${isDev ? 'index' : 'html/index.html'}#${item.key}`} target="_blank">
+                    {item.key === '6' ? (
+                      <MarkdownIcon />
+                    ) : (
+                      <>
+                        {item.key === '5' ? (
+                          <RegExpIcon />
+                        ) : (
+                          <>
+                            {item.key === '1' ? (
+                              <JSONIcon />
+                            ) : (
+                              <>
+                                <Icon type={item.icon} />
+                              </>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                    {item.text}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </>
