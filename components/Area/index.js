@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { AreaData } from './data';
-import { Select, Form, DatePicker, Radio, InputNumber, Row, Col, Button } from 'antd';
+import { Select, Form, DatePicker, Radio, Table, InputNumber, Row, Col, Button } from 'antd';
 const { Option } = Select;
 // const province = [];
 // AreaData.map((item, index) => {
@@ -14,7 +15,7 @@ function getRandom(m, n) {
 function Get_CarNo(d6, b8, sex, num) {
   var i = 0;
   var q17;
-  var reCarNo = '';
+  // var reCarNo = '';
   var list = [];
   while (i < num) {
     var sjs = getRandom(100, 999);
@@ -22,20 +23,19 @@ function Get_CarNo(d6, b8, sex, num) {
       if (sjs % 2 !== 0) {
         q17 = d6 + b8 + sjs;
         i++;
-        reCarNo = reCarNo + "<div class='Noid'>" + to18(q17) + '<br/></div>';
+        // reCarNo = reCarNo + "<div class='Noid'>" + to18(q17) + '<br/></div>';
         list.push(to18(q17));
       }
     } else {
       if (sjs % 2 == 0) {
         q17 = d6 + b8 + sjs;
         i++;
-        reCarNo = reCarNo + "<div class='Noid'>" + to18(q17) + '<br/></div>';
+        // reCarNo = reCarNo + "<div class='Noid'>" + to18(q17) + '<br/></div>';
         list.push(to18(q17));
       }
     }
   }
-  console.log(list);
-  return reCarNo;
+  return list;
 }
 
 //获取radio选中值
@@ -111,8 +111,25 @@ function to18(str17) {
   }
   return str17 + restr;
 }
-export default class App extends Component {
+const columns = [
+  {
+    title: '序号',
+    dataIndex: 'key',
+    key: 'key',
+    align: 'center',
+    width: '50px',
+  },
+
+  {
+    title: '身份证号',
+    dataIndex: 'number',
+    key: 'number',
+  },
+];
+const dateFormat = 'YYYY/MM/DD';
+class App extends Component {
   state = {
+    cardList: [],
     province: [],
     currentProvince: '',
     city: [],
@@ -125,10 +142,9 @@ export default class App extends Component {
     this.setState({ province: AreaData });
     setTimeout(() => {
       this.handleProvinceChange('110000');
-      this.handleCityChange('110000');
-      this.handleAreaChange('110102');
+      // this.handleCityChange('110000');
+      // this.handleAreaChange('110102');
     }, 10);
-    Get_CarNo('130101', '20190102', 1, 10);
   }
   handleProvinceChange(ev) {
     console.log('province', ev);
@@ -136,6 +152,9 @@ export default class App extends Component {
     AreaData.forEach(item => {
       if (item.code === ev) {
         this.setState({ city: item.cityList, area: [], currentProvince: item.code });
+        setTimeout(() => {
+          this.handleCityChange(item.cityList[0].code);
+        }, 10);
       }
     });
   }
@@ -145,6 +164,9 @@ export default class App extends Component {
     this.state.city.forEach(item => {
       if (item.code === ev) {
         this.setState({ area: item.areaList, currentCity: ev });
+        setTimeout(() => {
+          this.handleAreaChange(item.areaList[0].code);
+        }, 10);
       }
     });
   }
@@ -156,8 +178,27 @@ export default class App extends Component {
       }
     });
   }
+  createNumber() {
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        const date = values.date;
+        let list = Get_CarNo(
+          this.state.currentArea,
+          date.format(dateFormat).replace(/\//gi, ''),
+          values.sex,
+          values.number
+        );
+        list = list.map((item, index) => ({ key: index + 1, number: item }));
+        console.log(list);
+        this.setState({
+          cardList: list,
+        });
+      }
+    });
+  }
   render() {
     const {
+      cardList = [],
       province = [],
       city = [],
       area = [],
@@ -165,73 +206,96 @@ export default class App extends Component {
       currentCity,
       currentArea,
     } = this.state;
+    const { form } = this.props;
+    const { getFieldDecorator } = form;
+
     return (
       <div>
         <Form layout="horizontal" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
           <Form.Item label="地区">
-            <Select
-              // defaultValue="请选择省"
-              value={currentProvince}
-              style={{ width: 200 }}
-              onChange={ev => {
-                this.handleProvinceChange(ev);
-              }}
-            >
-              {province.map((item, index) => {
-                return (
-                  <Option key={index} value={item.code}>
-                    {item.name}
-                  </Option>
-                );
-              })}
-            </Select>
-            <Select
-              // defaultValue="请选择市"
-              value={currentCity}
-              style={{ width: 200 }}
-              onChange={ev => {
-                this.handleCityChange(ev);
-              }}
-            >
-              {city.map((item, index) => {
-                return (
-                  <Option key={index} value={item.code}>
-                    {item.name}
-                  </Option>
-                );
-              })}
-            </Select>
-            <Select
-              // defaultValue="请选择市"
-              value={currentArea}
-              style={{ width: 200 }}
-              onChange={ev => {
-                this.handleAreaChange(ev);
-              }}
-            >
-              {area.map((item, index) => {
-                return (
-                  <Option key={index} value={item.code}>
-                    {item.name}
-                  </Option>
-                );
-              })}
-            </Select>
+            <Row gutter={10}>
+              <Col span={8}>
+                <Select
+                  // defaultValue="请选择省"
+                  value={currentProvince}
+                  name="province"
+                  onChange={ev => {
+                    this.handleProvinceChange(ev);
+                  }}
+                >
+                  {province.map((item, index) => {
+                    return (
+                      <Option key={index} value={item.code}>
+                        {item.name}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              </Col>
+              <Col span={8}>
+                <Select
+                  // defaultValue="请选择市"
+                  value={currentCity}
+                  name="city"
+                  onChange={ev => {
+                    this.handleCityChange(ev);
+                  }}
+                >
+                  {city.map((item, index) => {
+                    return (
+                      <Option key={index} value={item.code}>
+                        {item.name}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              </Col>
+              <Col span={8}>
+                <Select
+                  // defaultValue="请选择市"
+                  value={currentArea}
+                  name="area"
+                  onChange={ev => {
+                    this.handleAreaChange(ev);
+                  }}
+                >
+                  {area.map((item, index) => {
+                    return (
+                      <Option key={index} value={item.code}>
+                        {item.name}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              </Col>
+            </Row>
           </Form.Item>
           <Form.Item label="出生日期">
-            <DatePicker />
+            {getFieldDecorator('date', {
+              initialValue: moment(moment().format(), dateFormat),
+              rules: [{ required: true, message: '请选择出生日期!' }],
+            })(<DatePicker name="date" />)}
           </Form.Item>
           <Form.Item label="性别">
-            <Radio.Group
-              onChange={this.onChange}
-              // value={this.state.value}
-            >
-              <Radio value={1}>男</Radio>
-              <Radio value={2}>女</Radio>
-            </Radio.Group>
+            {getFieldDecorator('sex', {
+              initialValue: 1,
+              rules: [{ required: true, message: '请选择性别!' }],
+            })(
+              <Radio.Group
+                name="sex"
+                onChange={this.onChange}
+                // value={this.state.value}
+              >
+                <Radio value={1}>男</Radio>
+                <Radio value={2}>女</Radio>
+              </Radio.Group>
+            )}
           </Form.Item>
           <Form.Item label="数量">
-            <InputNumber />
+            {getFieldDecorator('number', {
+              initialValue: 5,
+              rules: [{ required: true, message: 'Please input your username!' }],
+            })(<InputNumber max={10} min={1} />)}
           </Form.Item>
           <Row>
             <Col span={6}></Col>
@@ -242,8 +306,15 @@ export default class App extends Component {
                   this.createNumber();
                 }}
               >
-                生成银行卡号
+                生成身份证号
               </Button>
+              <Table
+                dataSource={cardList}
+                columns={columns}
+                size="small"
+                pagination={false}
+                style={{ marginTop: 20 }}
+              />
             </Col>
           </Row>
         </Form>
@@ -251,3 +322,4 @@ export default class App extends Component {
     );
   }
 }
+export default Form.create()(App);
