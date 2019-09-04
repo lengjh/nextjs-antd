@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Select, Table, InputNumber, Button, Tag, Row, Col } from 'antd';
 import { createNumber, backList } from './bank';
-import { createid } from './card';
+import Area from '../Area';
+
 const { Option } = Select;
 
 const columns = [
@@ -27,9 +28,7 @@ const columns = [
 ];
 export default class App extends Component {
   state = { backNumber: 5, bankList: [] };
-  componentDidMount() {
-    // createid(10);
-  }
+  componentDidMount() {}
 
   createNumber() {
     const { backNumber } = this.state;
@@ -100,7 +99,9 @@ export default class App extends Component {
             </Row>
           </Form>
         </Col>
-        <Col span={12}></Col>
+        <Col span={12}>
+          <Area />
+        </Col>
       </Row>
     );
   }
