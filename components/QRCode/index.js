@@ -1,29 +1,31 @@
-import { Input } from "antd";
-import css from "./index.less";
-var QRCode = require("qrcode");
+import { Input } from 'antd';
+import css from './index.less';
+var QRCode = require('qrcode');
 
 const { TextArea } = Input;
 export default class extends React.Component {
   static async getInitialProps({ req }) {
-    const userAgent = req ? req.headers["user-agent"] : navigator.userAgent;
+    const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
     return { userAgent };
   }
   componentDidMount() {
     const { canvas } = this.refs;
     this.canvas = canvas;
 
-    this.createQRCode(this.state.text);
+    setTimeout(() => {
+      this.createQRCode(this.state.text);
+    }, 10);
     try {
       chrome.tabs.getSelected(null, tab => {
         console.log(tab);
         console.log(tab.url);
         this.setState({ text: tab.url, title: tab.title });
       });
-    } catch (error) { }
+    } catch (error) {}
   }
   constructor(props) {
     super(props);
-    this.state = { visible: false, title: "", text: "请输入内容" };
+    this.state = { visible: false, title: '', text: '请输入内容' };
     this.setQCode = this.setQCode.bind(this);
     this.createQRCode = this.createQRCode.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -34,7 +36,6 @@ export default class extends React.Component {
       if (error) {
         // return console.error(error);
       }
-
     });
   }
   setQCode(ev) {
@@ -44,16 +45,16 @@ export default class extends React.Component {
     this.createQRCode(value);
   }
   onChange(ev) {
-    let json = "{}";
+    let json = '{}';
     let value = ev.target.value;
     try {
       value = eval(`(${value})`);
       value = JSON.stringify(value);
-    } catch (error) { }
+    } catch (error) {}
 
     try {
       json = JSON.parse(value);
-    } catch (error) { }
+    } catch (error) {}
     if (json) {
       this.setState({ json: json });
     }
@@ -69,9 +70,9 @@ export default class extends React.Component {
             // defaultValue={this.state.text}
             value={this.state.text}
             onChange={this.setQCode}
-            placeholder="输入二维码内容" />
+            placeholder="输入二维码内容"
+          />
         </div>
-
       </div>
     );
   }

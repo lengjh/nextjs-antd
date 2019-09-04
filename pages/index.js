@@ -4,7 +4,8 @@ import { Layout, Menu, Icon, Empty } from 'antd';
 import css from './index.less';
 import dynamic from 'next/dynamic';
 import MaxView from '../components/MaxView';
-import { MarkdownIcon, RegExpIcon, JSONIcon } from '../components/Icons';
+import { MarkdownIcon, RegExpIcon, JSONIcon, CardIcon } from '../components/Icons';
+import { menuList } from '../components/Icons/menu';
 import codeIcon from '../static/code_icon.svg';
 const { Header, Content, Sider, Footer } = Layout;
 
@@ -26,6 +27,10 @@ const DynamicComponentRE = dynamic(() => {
 const DynamicComponentRMarkdown = dynamic(() => {
   return import('../components/Markdown');
 });
+const DynamicComponentCard = dynamic(() => {
+  return import('../components/Card');
+});
+
 const getCompoent = type => {
   switch (type) {
     case '1':
@@ -40,18 +45,13 @@ const getCompoent = type => {
       return <DynamicComponentRE />;
     case '6':
       return <DynamicComponentRMarkdown />;
+    case '7':
+      return <DynamicComponentCard />;
     default:
       return <Empty />;
   }
 };
-const menuList = [
-  { key: '1', text: 'JSON View', icon: 'check' },
-  { key: '2', text: '编码转换', icon: 'code' },
-  { key: '3', text: 'QR Code', icon: 'barcode' },
-  { key: '4', text: '图片换Base64', icon: 'file-image' },
-  { key: '5', text: '正则', icon: 'check' },
-  { key: '6', text: 'Markdown', icon: <Icon component={<mdIcon />} /> },
-];
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -126,9 +126,7 @@ class App extends Component {
                               {item.key === '1' ? (
                                 <JSONIcon />
                               ) : (
-                                <>
-                                  <Icon type={item.icon} />
-                                </>
+                                <>{item.key === '7' ? <CardIcon /> : <Icon type={item.icon} />}</>
                               )}
                             </>
                           )}
@@ -154,7 +152,7 @@ class App extends Component {
             <Content>
               <MaxView title={text}>{getCompoent(type)}</MaxView>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>XX ©2019</Footer>
+            {/* <Footer style={{ textAlign: 'center' }}>XX ©2019</Footer> */}
           </Layout>
         </Layout>
       </>

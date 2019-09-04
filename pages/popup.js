@@ -2,17 +2,11 @@ import React, { Component } from 'react';
 import Head from 'next/head';
 import { Icon } from 'antd';
 import QRCode from '../components/QRCode';
-import { MarkdownIcon, RegExpIcon, JSONIcon } from '../components/Icons';
+import { MarkdownIcon, RegExpIcon, JSONIcon, CardIcon } from '../components/Icons';
+import { menuList } from '../components/Icons/menu';
 
 import css from './popup.less';
-const menuList = [
-  { key: '1', text: 'JSON View', icon: 'check' },
-  { key: '2', text: '编码转换', icon: 'code' },
-  { key: '3', text: 'QR Code', icon: 'barcode' },
-  { key: '4', text: '图片换Base64', icon: 'file-image' },
-  { key: '5', text: '正则达式', icon: 'check' },
-  { key: '6', text: 'Markdown', icon: <Icon component={<mdIcon />} /> },
-];
+
 class App extends Component {
   static async getInitialProps({ req }) {
     return { isDev: process.env.NODE_ENV !== 'production' };
@@ -59,9 +53,7 @@ class App extends Component {
                             {item.key === '1' ? (
                               <JSONIcon />
                             ) : (
-                              <>
-                                <Icon type={item.icon} />
-                              </>
+                              <>{item.key === '7' ? <CardIcon /> : <Icon type={item.icon} />}</>
                             )}
                           </>
                         )}
