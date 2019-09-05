@@ -103,7 +103,7 @@ class App extends Component {
     return (
       <>
         <Head>
-          <title>Home</title>
+          <title>Web Development Tools</title>
         </Head>
         <Layout>
           {load ? (
