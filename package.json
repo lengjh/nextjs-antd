@@ -44,6 +44,7 @@
     "conventional-changelog-cli": "^2.0.23",
     "cz-conventional-changelog": "^3.0.2",
     "git-cz": "^3.2.1",
+    "js-beautify": "^1.10.2",
     "less-loader": "^5.0.0",
     "next-compose-plugins": "^2.2.0",
     "next-images": "^1.1.2",

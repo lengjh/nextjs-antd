@@ -147,7 +147,6 @@ class App extends Component {
     }, 10);
   }
   handleProvinceChange(ev) {
-    console.log('province', ev);
     this.setState({ city: [], area: [], currentProvince: '', currentCity: '', currentArea: '' });
     AreaData.forEach(item => {
       if (item.code === ev) {
@@ -159,7 +158,6 @@ class App extends Component {
     });
   }
   handleCityChange(ev) {
-    console.log('city', ev);
     this.setState({ area: [], currentCity: '', currentArea: '' });
     this.state.city.forEach(item => {
       if (item.code === ev) {
@@ -171,7 +169,6 @@ class App extends Component {
     });
   }
   handleAreaChange(ev) {
-    console.log('area', ev);
     this.state.area.forEach(item => {
       if (item.code === ev) {
         this.setState({ currentArea: ev });
@@ -189,7 +186,6 @@ class App extends Component {
           values.number
         );
         list = list.map((item, index) => ({ key: index + 1, number: item }));
-        console.log(list);
         this.setState({
           cardList: list,
         });
@@ -273,13 +269,13 @@ class App extends Component {
           <Form.Item label="出生日期">
             {getFieldDecorator('date', {
               initialValue: moment(moment().format(), dateFormat),
-              rules: [{ required: true, message: '请选择出生日期!' }],
+              rules: [{ required: false, message: '请选择出生日期!' }],
             })(<DatePicker name="date" />)}
           </Form.Item>
           <Form.Item label="性别">
             {getFieldDecorator('sex', {
               initialValue: 1,
-              rules: [{ required: true, message: '请选择性别!' }],
+              rules: [{ required: false, message: '请选择性别!' }],
             })(
               <Radio.Group
                 name="sex"
@@ -294,7 +290,7 @@ class App extends Component {
           <Form.Item label="数量">
             {getFieldDecorator('number', {
               initialValue: 5,
-              rules: [{ required: true, message: 'Please input your username!' }],
+              rules: [{ required: false, message: 'Please input your username!' }],
             })(<InputNumber max={10} min={1} />)}
           </Form.Item>
           <Row>

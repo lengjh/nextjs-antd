@@ -1,5 +1,6 @@
 import { Radio, Input, Card, Row, Col } from 'antd';
 import base64 from 'Base64';
+import beautify from 'js-beautify';
 import css from './index.less';
 var md5 = require('md5');
 
@@ -110,6 +111,15 @@ export default class extends React.Component {
       case 9:
         afterValue = beforeValue.replace(/\n/gi, '');
         break;
+      case 10:
+        afterValue = beautify(beforeValue);
+        break;
+      case 11:
+        afterValue = beautify.css(beforeValue);
+        break;
+      case 12:
+        afterValue = beautify.html(beforeValue);
+        break;
 
       default:
         break;
@@ -141,6 +151,9 @@ export default class extends React.Component {
             <Radio.Button value={7}>去除HTML</Radio.Button>
             <Radio.Button value={8}>MD5加密</Radio.Button>
             <Radio.Button value={9}>最小化代码</Radio.Button>
+            <Radio.Button value={10}>美化JS</Radio.Button>
+            <Radio.Button value={11}>美化CSS</Radio.Button>
+            <Radio.Button value={12}>美化HTML</Radio.Button>
           </Radio.Group>
         </div>
         <div className={css.codeBox}>
