@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Head from 'next/head';
 import { Icon } from 'antd';
 import QRCode from '../components/QRCode';
-import { MarkdownIcon, RegExpIcon, JSONIcon, CardIcon } from '../components/Icons';
+import { MarkdownIcon, RegExpIcon, JSONIcon, CardIcon, QRCodeIcon } from '../components/Icons';
 import { menuList } from '../components/Icons/menu';
 
 import css from './popup.less';
@@ -46,14 +46,32 @@ class App extends Component {
                       <MarkdownIcon />
                     ) : (
                       <>
-                        {item.key === '5' ? (
-                          <RegExpIcon />
+                        {item.key === '6' ? (
+                          <MarkdownIcon />
                         ) : (
                           <>
-                            {item.key === '1' ? (
-                              <JSONIcon />
+                            {item.key === '5' ? (
+                              <RegExpIcon />
                             ) : (
-                              <>{item.key === '7' ? <CardIcon /> : <Icon type={item.icon} />}</>
+                              <>
+                                {item.key === '1' ? (
+                                  <JSONIcon />
+                                ) : (
+                                  <>
+                                    {item.key === '7' ? (
+                                      <CardIcon />
+                                    ) : (
+                                      <>
+                                        {item.key === '3' ? (
+                                          <QRCodeIcon />
+                                        ) : (
+                                          <Icon type={item.icon} />
+                                        )}
+                                      </>
+                                    )}
+                                  </>
+                                )}
+                              </>
                             )}
                           </>
                         )}

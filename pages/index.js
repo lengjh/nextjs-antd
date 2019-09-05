@@ -4,7 +4,7 @@ import { Layout, Menu, Icon, Empty } from 'antd';
 import css from './index.less';
 import dynamic from 'next/dynamic';
 import MaxView from '../components/MaxView';
-import { MarkdownIcon, RegExpIcon, JSONIcon, CardIcon } from '../components/Icons';
+import { MarkdownIcon, RegExpIcon, JSONIcon, CardIcon, QRCodeIcon } from '../components/Icons';
 import { menuList } from '../components/Icons/menu';
 import codeIcon from '../static/code_icon.svg';
 const { Header, Content, Sider, Footer } = Layout;
@@ -126,7 +126,19 @@ class App extends Component {
                               {item.key === '1' ? (
                                 <JSONIcon />
                               ) : (
-                                <>{item.key === '7' ? <CardIcon /> : <Icon type={item.icon} />}</>
+                                <>
+                                  {item.key === '7' ? (
+                                    <CardIcon />
+                                  ) : (
+                                    <>
+                                      {item.key === '3' ? (
+                                        <QRCodeIcon />
+                                      ) : (
+                                        <Icon type={item.icon} />
+                                      )}
+                                    </>
+                                  )}
+                                </>
                               )}
                             </>
                           )}
