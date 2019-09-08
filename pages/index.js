@@ -27,9 +27,9 @@ const DynamicComponentRE = dynamic(() => {
 const DynamicComponentRMarkdown = dynamic(() => {
   return import('../components/Markdown');
 });
-const DynamicComponentCard = dynamic(() => {
-  return import('../components/Card');
-});
+// const DynamicComponentCard = dynamic(() => {
+//   return import('../components/Card');
+// });
 
 const getCompoent = type => {
   switch (type) {
@@ -45,8 +45,8 @@ const getCompoent = type => {
       return <DynamicComponentRE />;
     case '6':
       return <DynamicComponentRMarkdown />;
-    case '7':
-      return <DynamicComponentCard />;
+    // case '7':
+    //   return <DynamicComponentCard />;
     default:
       return <Empty />;
   }

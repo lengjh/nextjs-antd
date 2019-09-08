@@ -10,7 +10,9 @@
     "128": "./icons/128.png"
   },
   "permissions": ["activeTab"],
-  "chrome_url_overrides": {},
+  "chrome_url_overrides": {
+    "newtab": "html/home.html"
+  },
   "browser_action": {
     "default_title": "Click show QR",
     "default_popup": "html/popup.html"

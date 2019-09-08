@@ -4,6 +4,7 @@
 ### Bug Fixes
 
 * **更换图标:** 更换二维码图标 ([209f9ce](https://github.com/lengjh/nextjs-antd/commit/209f9ce))
+* **调整title:** 调整首页标题 ([6eeb77d](https://github.com/lengjh/nextjs-antd/commit/6eeb77d))
 * **调整依赖包:** 调整添加日志依赖包 ([580930a](https://github.com/lengjh/nextjs-antd/commit/580930a))
 
 
