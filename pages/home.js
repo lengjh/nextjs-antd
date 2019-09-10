@@ -51,7 +51,9 @@ class App extends Component {
           <div>
             <div>
               <span>
-                {hour}:{minute}
+                {hour}
+                <em className={second % 2 === 0 ? css.secondColor : css.secondNormal}>:</em>
+                {minute}
               </span>
               <i>{second}</i>
             </div>
