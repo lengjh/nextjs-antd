@@ -1,12 +1,12 @@
 {
   "name": "WDT Plus",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "manifest_version": 2,
   "description": "Web development tools",
   "icons": {
-    "32": "./icons/32.png",
-    "48": "./icons/48.png",
-    "64": "./icons/64.png",
+    "32": "./icons/128.png",
+    "48": "./icons/128.png",
+    "64": "./icons/128.png",
     "128": "./icons/128.png"
   },
   "permissions": ["activeTab"],

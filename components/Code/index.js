@@ -50,6 +50,10 @@ export default class extends React.Component {
       codeType: parseInt(localStorage.getItem('codeType')) || 1,
       beforeValue,
     });
+    const obj = { target: { value: parseInt(localStorage.getItem('codeType'), 10) || 1 } };
+    setTimeout(() => {
+      this.onChange(obj);
+    }, 500);
   }
 
   onChange(ev) {

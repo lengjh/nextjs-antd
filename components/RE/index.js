@@ -13,10 +13,23 @@ const optionList = [
   },
 ];
 export default class App extends React.Component {
-  state = { g: true, i: true, n: false, value: '', beforeValue: '', result: [], selectValue: '' };
-  onChange(ev) {
-    this.setState({ value: ev.target.value });
+  state = {
+    g: true,
+    i: true,
+    n: false,
+    value: localStorage.getItem('_RE') || '',
+    beforeValue: localStorage.getItem('_RE_VALUE') || '',
+    result: [],
+    selectValue: '',
+  };
+  componentDidMount() {
     this.change();
+  }
+  onChange(ev) {
+    const val = ev.target.value;
+    this.setState({ value: val });
+    this.change();
+    localStorage.setItem('_RE', val);
   }
   change() {
     setTimeout(() => {
@@ -41,6 +54,8 @@ export default class App extends React.Component {
   textChange(ev) {
     this.setState({ beforeValue: ev.target.value });
     this.change();
+
+    localStorage.setItem('_RE_VALUE', ev.target.value);
   }
   onSelectChnage(ev) {
     if (!ev) {
@@ -54,7 +69,6 @@ export default class App extends React.Component {
     return (
       <div className={css.box}>
         <div className={css.header}>
-          {' '}
           <Row gutter={10}>
             <Col span={12}>
               <Input
