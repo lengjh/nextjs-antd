@@ -6,6 +6,11 @@ import css from './home.less';
 import moment from 'moment';
 import codeIcon from '../static/bg2.jpg';
 // import { url } from 'inspector';
+const list = [
+  '世上有很多美好的事物等着你，所以你要内心温柔，安静努力',
+  '得而不喜，失而不忧，内心宁静，则幸福常在',
+  '生活，需要一点阳光',
+];
 const week = {
   1: '一',
   2: '二',
@@ -19,11 +24,24 @@ const week = {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { year: '', month: '', date: '', hour: '', minute: '', second: '' };
+    this.state = {
+      year: '',
+      month: '',
+      date: '',
+      hour: '',
+      minute: '',
+      second: '',
+      show: true,
+      juzi: list[0],
+    };
     this.run = this.run.bind(this);
   }
   componentWillMount() {
     this.run();
+    this.showSecond();
+    try {
+      // document.documentElement.style.backgroundImage = `url(${codeIcon})`;
+    } catch (error) {}
   }
   run() {
     const MOMENT = moment();
@@ -36,10 +54,17 @@ class App extends Component {
       second: MOMENT.format('ss'),
       day: MOMENT.day(),
     });
-    this.timer = setTimeout(this.run, 1000);
+    this.timer = setTimeout(this.run, 500);
+  }
+  showSecond() {
+    this.setState({ show: !this.state.show });
+    clearTimeout(this.showTimer);
+    this.showTimer = setTimeout(() => {
+      this.showSecond();
+    }, 500);
   }
   render() {
-    const { year, month, date, hour, minute, second, day } = this.state;
+    const { year, month, date, hour, minute, second, day, show, juzi } = this.state;
     return (
       <>
         <Head>
@@ -52,14 +77,15 @@ class App extends Component {
             <div>
               <span>
                 {hour}
-                <em className={second % 2 === 0 ? css.secondColor : css.secondNormal}>:</em>
+                <em className={show ? css.secondColor : css.secondNormal}>:</em>
                 {minute}
               </span>
               <i>{second}</i>
             </div>
             <div>
-              {year}年{month}月{date}日 星期{week[day]}
+              {year}年 {month}月 {date}日 星期{week[day]}
             </div>
+            {/* <div className={css.juzi}>{juzi}</div> */}
           </div>
         </div>
         <style jsx>
